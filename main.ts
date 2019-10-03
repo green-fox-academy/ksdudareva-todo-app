@@ -1,34 +1,32 @@
 'use strict';
 
+import { printUsageInfo } from "./printUsageInfo";
+import { listTasks } from "./listTasks";
+import { addTask } from "./addTask";
 
 const fs = require('fs');
 
 const args: string[] = process.argv;
 
-import { printUsageInfo } from "./printUsageInfo";
-import { listTasks } from "./listTasks";
-import { addTask } from "./addTask";
 
-let taskList: string = fs.readFileSync('taskList.txt', 'utf-8');
-
-
-let mainProcess = () => {
+let mainProcess = ():void => {
 
     if (args.length == 2) {
-        console.log(printUsageInfo());
+        printUsageInfo();
     } else if (args[2] == '-l') {
+        let taskList: string = fs.readFileSync('taskList.txt', 'utf-8');
         if (taskList == '') {
             console.log('Nothing for today!');
         } else {
-            console.log(listTasks());
+            listTasks(taskList);
         }
     } else if (args[2] == '-a') {
         if (args[3] === undefined) {
             console.log('Unable to add. No task provided');
         } else {
-            console.log(addTask());
+            addTask(args[3]);
         }
-    } 
+    } //else if ()
 
 
 }
